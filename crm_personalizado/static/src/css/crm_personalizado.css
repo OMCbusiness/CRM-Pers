@@ -55,6 +55,11 @@
     padding: 8px 14px;
 }
 
+.crm-field-wide {
+    flex: 1;
+    min-width: 180px;
+}
+
 .crm-custom-label {
     font-size: 11px;
     font-weight: 700;
@@ -192,9 +197,7 @@
 
 .crm-badge-sale      { background: #dbeeff; color: #1a5fa3; border-color: #b8d9f5; }
 .crm-badge-rent      { background: #d6f5e3; color: #166534; border-color: #a7e4c0; }
-.crm-badge-both      { background: #fef3cd; color: #92600a; border-color: #f7d87c; }
 .crm-badge-exclusive { background: #fff0e0; color: #92400e; border-color: #fcc97a; }
-.crm-badge-agency    { background: #f0ebff; color: #5b21b6; border-color: #d5c5f9; }
 
 /* ── Barra de urgencia ───────────────────────────────────────── */
 .crm-kanban-urgency-row {
@@ -237,8 +240,7 @@
 /* ================================================================
    TOGGLES — estilo mejorado
    ================================================================ */
-.crm-exclusive-toggle .o_boolean_toggle,
-.crm-agency-toggle .o_boolean_toggle {
+.crm-exclusive-toggle .o_boolean_toggle {
     --toggle-active-bg: var(--crm-primary);
 }
 

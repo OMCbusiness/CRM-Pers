@@ -10,7 +10,7 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
 
-            <!-- ── Eliminar campos no deseados ── -->
+            <!-- ── Ocultar campos del formulario original ── -->
             <field name="expected_revenue" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
@@ -39,30 +39,51 @@
                 <attribute name="invisible">1</attribute>
             </field>
 
-            <!-- ── Ocultar pestañas no deseadas ── -->
-            <page name="internal_notes" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </page>
-            <page name="lead" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </page>
-
-            <!-- ── Ocultar labels de campos eliminados ── -->
+            <!-- ── Ocultar labels del original ── -->
             <label for="expected_revenue" position="attributes">
                 <attribute name="invisible">1</attribute>
             </label>
             <label for="date_deadline" position="attributes">
                 <attribute name="invisible">1</attribute>
             </label>
+            <label for="probability" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
 
-            <!-- ── Inyectar nuevos campos después del nombre ── -->
+            <!-- ── Ocultar pestañas ── -->
+            <page name="internal_notes" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
+            <page name="lead" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
+            <page name="extra" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
+
+            <!-- ── Campos personalizados después del nombre ── -->
             <field name="name" position="after">
-
-                <!-- Bloque visual: operación + exclusiva + urgencia -->
                 <div class="crm-custom-header-block">
 
-                    <!-- Fila 1: Operación y Exclusiva -->
+                    <!-- Fila 1: Email + Teléfono -->
                     <div class="crm-custom-row">
+                        <div class="crm-custom-field-group crm-field-wide">
+                            <label class="crm-custom-label" for="email_from">Correo electrónico</label>
+                            <field name="email_from" widget="email" placeholder="correo@ejemplo.com"/>
+                        </div>
+                        <div class="crm-custom-field-group crm-field-wide">
+                            <label class="crm-custom-label" for="phone">Teléfono</label>
+                            <field name="phone" widget="phone" placeholder="+34 600 000 000"/>
+                        </div>
+                    </div>
+
+                    <!-- Fila 2: Presupuesto + Operación -->
+                    <div class="crm-custom-row">
+                        <div class="crm-custom-field-group crm-field-wide">
+                            <label class="crm-custom-label" for="budget">Presupuesto</label>
+                            <field name="company_currency" invisible="1"/>
+                            <field name="budget" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                        </div>
                         <div class="crm-custom-field-group">
                             <label class="crm-custom-label" for="operation_type">Operación</label>
                             <field name="operation_type"
@@ -70,24 +91,21 @@
                                    options="{'horizontal': true}"
                                    class="crm-operation-radio"/>
                         </div>
+                    </div>
+
+                    <!-- Fila 3: Urgencia + Exclusiva -->
+                    <div class="crm-custom-row">
+                        <div class="crm-custom-field-group">
+                            <label class="crm-custom-label" for="urgency_level">Nivel de urgencia</label>
+                            <field name="urgency_level" widget="urgency_stars" class="crm-urgency-stars"/>
+                        </div>
                         <div class="crm-custom-field-group crm-badge-group">
                             <field name="exclusive" widget="boolean_toggle" class="crm-exclusive-toggle"/>
                             <label class="crm-custom-label crm-label-inline" for="exclusive">Exclusiva</label>
                         </div>
-                        <div class="crm-custom-field-group crm-badge-group">
-                            <field name="working_with_agency" widget="boolean_toggle" class="crm-agency-toggle"/>
-                            <label class="crm-custom-label crm-label-inline" for="working_with_agency">¿Trabaja con otra agencia?</label>
-                        </div>
-                    </div>
-
-                    <!-- Fila 2: Widget de urgencia -->
-                    <div class="crm-custom-row crm-urgency-row">
-                        <label class="crm-custom-label" for="urgency_level">Nivel de urgencia</label>
-                        <field name="urgency_level" widget="urgency_stars" class="crm-urgency-stars"/>
                     </div>
 
                 </div>
-
             </field>
 
         </field>
@@ -95,7 +113,7 @@
 
 
     <!-- ============================================================
-         VISTA KANBAN — añadir indicadores de urgencia y operación
+         VISTA KANBAN
     ============================================================ -->
     <record id="crm_lead_kanban_view_custom" model="ir.ui.view">
         <field name="name">crm.lead.kanban.custom</field>
@@ -103,34 +121,38 @@
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
 
-            <!-- Inyectar campos en el bloque del kanban -->
+            <!-- Inyectar campos custom -->
             <templates position="before">
                 <field name="urgency_level"/>
                 <field name="operation_type"/>
                 <field name="exclusive"/>
-                <field name="working_with_agency"/>
+                <field name="budget"/>
             </templates>
 
-            <!-- Ocultar partner_id de la tarjeta -->
+            <!-- Ocultar partner_id y contact_name de la tarjeta -->
             <xpath expr="//t[@t-name='card']//div[@invisible='not partner_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//t[@t-name='card']//field[@name='contact_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='card']//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='card']//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
 
-            <!-- Añadir badges e indicadores en la tarjeta kanban -->
+            <!-- Badges e indicadores -->
             <xpath expr="//t[@t-name='card']/footer" position="before">
                 <div class="crm-kanban-info">
-                    <!-- Fila de badges: Operación + Exclusiva -->
                     <div class="crm-kanban-badges">
                         <span t-if="record.operation_type.raw_value == 'sale'"
                               class="crm-badge crm-badge-sale"><i class="fa fa-home me-1"/>Venta</span>
                         <span t-if="record.operation_type.raw_value == 'rent'"
                               class="crm-badge crm-badge-rent"><i class="fa fa-key me-1"/>Alquiler</span>
-                        <span t-if="record.operation_type.raw_value == 'both'"
-                              class="crm-badge crm-badge-both"><i class="fa fa-exchange me-1"/>Venta/Alq.</span>
                         <span t-if="record.exclusive.raw_value"
                               class="crm-badge crm-badge-exclusive"><i class="fa fa-star me-1"/>Exclusiva</span>
-                        <span t-if="record.working_with_agency.raw_value"
-                              class="crm-badge crm-badge-agency"><i class="fa fa-users me-1"/>Agencia</span>
                     </div>
                     <!-- Barra de urgencia -->
                     <div class="crm-kanban-urgency-row" t-if="record.urgency_level.raw_value">
@@ -150,7 +172,7 @@
 
 
     <!-- ============================================================
-         VISTA LISTA — añadir columnas de urgencia y operación
+         VISTA LISTA
     ============================================================ -->
     <record id="crm_lead_list_view_custom" model="ir.ui.view">
         <field name="name">crm.lead.list.custom</field>
@@ -158,22 +180,26 @@
         <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
         <field name="arch" type="xml">
 
-            <!-- Ocultar columnas no deseadas -->
+            <!-- Ocultar columnas no necesarias -->
             <field name="expected_revenue" position="attributes">
-                <attribute name="optional">hide</attribute>
                 <attribute name="column_invisible">1</attribute>
             </field>
             <field name="user_id" position="attributes">
-                <attribute name="optional">hide</attribute>
                 <attribute name="column_invisible">1</attribute>
             </field>
             <field name="tag_ids" position="attributes">
-                <attribute name="optional">hide</attribute>
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="contact_name" position="attributes">
                 <attribute name="column_invisible">1</attribute>
             </field>
 
-            <!-- Añadir columnas nuevas -->
-            <field name="partner_id" position="after">
+            <!-- Añadir columnas personalizadas -->
+            <field name="email_from" position="after">
+                <field name="budget" string="Presupuesto" optional="show" widget="monetary" options="{'currency_field': 'company_currency'}"/>
                 <field name="operation_type" string="Operación" optional="show"/>
                 <field name="urgency_level" string="Urgencia" optional="show"/>
                 <field name="exclusive" string="Exclusiva" optional="show"/>

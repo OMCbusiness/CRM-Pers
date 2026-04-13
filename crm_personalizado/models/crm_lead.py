@@ -11,10 +11,10 @@ class CrmLead(models.Model):
         default=1,
     )
 
-    # ¿El cliente ya trabaja con otra agencia inmobiliaria?
-    working_with_agency = fields.Boolean(
-        string='¿Ya trabaja con otra agencia?',
-        default=False,
+    # Presupuesto del cliente
+    budget = fields.Monetary(
+        string='Presupuesto',
+        currency_field='company_currency',
     )
 
     # Operación deseada: venta o alquiler
@@ -22,7 +22,6 @@ class CrmLead(models.Model):
         selection=[
             ('sale', 'Vender'),
             ('rent', 'Alquilar'),
-            ('both', 'Vender y Alquilar'),
         ],
         string='Operación',
         default='sale',
