@@ -153,6 +153,11 @@
                 <field name="phone"/>
             </templates>
 
+            <!-- Usar budget como suma en la barra de progreso de etapas -->
+            <xpath expr="//progressbar" position="attributes">
+                <attribute name="sum_field">budget</attribute>
+            </xpath>
+
             <!-- Reemplazar tarjeta completa -->
             <xpath expr="//t[@t-name='card']" position="replace">
                 <t t-name="card">
