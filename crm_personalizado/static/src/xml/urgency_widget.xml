@@ -5,7 +5,7 @@
         <div class="o_urgency_widget">
             <t t-foreach="[1,2,3,4,5]" t-as="level" t-key="level">
                 <button
-                    t-attf-class="o_urgency_btn o_urgency_btn_{{ level }} {{ level == props.value ? 'o_urgency_btn_active' : '' }} {{ !props.readonly ? 'o_urgency_btn_clickable' : '' }}"
+                    t-attf-class="o_urgency_btn o_urgency_btn_{{ level }} {{ level == value ? 'o_urgency_btn_active' : '' }} {{ !props.readonly ? 'o_urgency_btn_clickable' : '' }}"
                     t-on-click="() => this.setValue(level)"
                     t-att-title="this.getLabel(level)"
                     type="button"
