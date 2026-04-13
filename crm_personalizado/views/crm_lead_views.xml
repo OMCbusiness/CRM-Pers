@@ -181,6 +181,17 @@
 
                     </div>
 
+                    <!-- Campos ocultos requeridos por vistas hijas (forecast) -->
+                    <widget name="web_ribbon" id="lost_ribbon" title="Lost" bg_color="text-bg-danger" invisible="won_status != 'lost'"/>
+                    <widget name="web_ribbon" id="archived_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active or won_status in ['lost', 'won']"/>
+                    <div class="o_kanban_card_crm_lead_revenue d-none">
+                        <field name="expected_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                    </div>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="tag_ids" invisible="1" widget="many2many_tags"/>
+                    <field name="contact_name" invisible="1"/>
+                    <field name="partner_name" invisible="1"/>
+
                     <footer class="pt-1">
                         <div class="d-flex mt-auto align-items-center">
                             <field name="activity_ids" widget="kanban_activity"/>
