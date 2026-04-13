@@ -39,6 +39,17 @@
                 <attribute name="invisible">1</attribute>
             </field>
 
+            <!-- ── Ocultar grupos que contienen email/teléfono duplicados ── -->
+            <group name="opportunity_partner" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </group>
+            <group name="lead_partner" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </group>
+            <group name="lead_info" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </group>
+
             <!-- ── Ocultar labels del original ── -->
             <label for="expected_revenue" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -64,6 +75,12 @@
             <!-- ── Campos personalizados después del nombre ── -->
             <field name="name" position="after">
                 <div class="crm-custom-header-block">
+
+                    <!-- Badge exclusiva: esquina superior derecha -->
+                    <div class="crm-exclusive-corner">
+                        <field name="exclusive" widget="boolean_toggle" class="crm-exclusive-toggle" nolabel="1"/>
+                        <span class="crm-exclusive-corner-label">Exclusiva</span>
+                    </div>
 
                     <!-- Fila 1: Email + Teléfono -->
                     <div class="crm-custom-row">
@@ -93,15 +110,11 @@
                         </div>
                     </div>
 
-                    <!-- Fila 3: Urgencia + Exclusiva -->
+                    <!-- Fila 3: Urgencia -->
                     <div class="crm-custom-row">
                         <div class="crm-custom-field-group">
                             <label class="crm-custom-label" for="urgency_level">Nivel de urgencia</label>
                             <field name="urgency_level" widget="urgency_stars" class="crm-urgency-stars"/>
-                        </div>
-                        <div class="crm-custom-field-group crm-badge-group">
-                            <field name="exclusive" widget="boolean_toggle" class="crm-exclusive-toggle"/>
-                            <label class="crm-custom-label crm-label-inline" for="exclusive">Exclusiva</label>
                         </div>
                     </div>
 
