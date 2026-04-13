@@ -111,57 +111,62 @@
 }
 
 /* ================================================================
-   WIDGET DE URGENCIA (RAYOS)
+   WIDGET DE URGENCIA — SELECTOR DE SEGMENTOS
    ================================================================ */
-.o_urgency_stars_widget {
+.o_urgency_widget {
     display: inline-flex;
     align-items: center;
+    gap: 12px;
+}
+
+.o_urgency_segments {
+    display: flex;
+    align-items: flex-end;
     gap: 4px;
 }
 
-.o_urgency_bolt {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease;
-    font-size: 16px;
-    border: 2px solid transparent;
+.o_urgency_seg {
+    border: none;
+    border-radius: 4px;
+    background: #e2e8f0;
+    cursor: default;
+    transition: background 0.18s, transform 0.15s;
+    padding: 0;
 }
 
-.o_urgency_bolt:hover {
-    transform: scale(1.2);
-}
+/* Altura progresiva: cada segmento más alto */
+.o_urgency_seg_1 { width: 10px; height: 12px; }
+.o_urgency_seg_2 { width: 10px; height: 18px; }
+.o_urgency_seg_3 { width: 10px; height: 24px; }
+.o_urgency_seg_4 { width: 10px; height: 30px; }
+.o_urgency_seg_5 { width: 10px; height: 36px; }
 
-.o_urgency_bolt_inactive {
-    color: #c8d6e5;
-    background: #f4f7fb;
-    border-color: #dce6f0;
-}
+.o_urgency_seg_clickable { cursor: pointer; }
+.o_urgency_seg_clickable:hover { transform: scaleY(1.1); filter: brightness(0.9); }
 
-.o_urgency_bolt_inactive:hover {
-    color: #f39c12;
-    background: #fff8ec;
-    border-color: #f39c12;
-}
+/* Colores activos por nivel total seleccionado */
+.o_urgency_seg_active.o_urgency_seg_1 { background: #27ae60; }
+.o_urgency_seg_active.o_urgency_seg_2 { background: #52c878; }
+.o_urgency_seg_active.o_urgency_seg_3 { background: #f1c40f; }
+.o_urgency_seg_active.o_urgency_seg_4 { background: #e67e22; }
+.o_urgency_seg_active.o_urgency_seg_5 { background: #e74c3c; }
 
-/* Colores por nivel: 1=verde, 2=azul, 3=amarillo, 4=naranja, 5=rojo */
-.o_urgency_bolt_active:nth-child(1) { color: #ffffff; background: #27ae60; border-color: #27ae60; }
-.o_urgency_bolt_active:nth-child(2) { color: #ffffff; background: #3498db; border-color: #3498db; }
-.o_urgency_bolt_active:nth-child(3) { color: #ffffff; background: #f1c40f; border-color: #f1c40f; }
-.o_urgency_bolt_active:nth-child(4) { color: #ffffff; background: #e67e22; border-color: #e67e22; }
-.o_urgency_bolt_active:nth-child(5) { color: #ffffff; background: #e74c3c; border-color: #e74c3c; }
-
-.o_urgency_label {
-    margin-left: 10px;
-    font-size: 13px;
+/* Etiqueta de texto */
+.o_urgency_tag {
+    font-size: 12px;
     font-weight: 700;
-    color: var(--crm-primary);
-    min-width: 62px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    min-width: 68px;
+    text-align: center;
 }
+
+.o_urgency_tag_1 { background: #d5f5e3; color: #1e6e42; }
+.o_urgency_tag_2 { background: #d6eaf8; color: #1a6394; }
+.o_urgency_tag_3 { background: #fef9e7; color: #9a7d0a; }
+.o_urgency_tag_4 { background: #fdebd0; color: #a04000; }
+.o_urgency_tag_5 { background: #fdedec; color: #922b21; }
 
 /* ================================================================
    KANBAN — TARJETA CON COLOR POR URGENCIA

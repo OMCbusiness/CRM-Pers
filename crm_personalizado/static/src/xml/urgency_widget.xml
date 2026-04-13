@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates xml:space="preserve">
 
-    <!-- Template del widget de urgencia (rayos 1-5) -->
     <t t-name="crm_personalizado.UrgencyStarsWidget">
-        <div class="o_urgency_stars_widget">
-            <t t-foreach="[1,2,3,4,5]" t-as="level" t-key="level">
-                <span
-                    t-attf-class="o_urgency_bolt {{ level &lt;= props.value ? 'o_urgency_bolt_active' : 'o_urgency_bolt_inactive' }}"
-                    t-att-data-level="level"
-                    t-on-click="() => this.setValue(level)"
-                    t-att-title="this.getLabel(level)"
-                >
-                    <i class="fa fa-bolt"/>
-                </span>
-            </t>
-            <span class="o_urgency_label" t-esc="this.getCurrentLabel()"/>
+        <div class="o_urgency_widget">
+            <div class="o_urgency_segments">
+                <t t-foreach="[1,2,3,4,5]" t-as="level" t-key="level">
+                    <button
+                        t-attf-class="o_urgency_seg o_urgency_seg_{{ level }} {{ level &lt;= props.value ? 'o_urgency_seg_active' : '' }} {{ !props.readonly ? 'o_urgency_seg_clickable' : '' }}"
+                        t-on-click="() => this.setValue(level)"
+                        t-att-title="this.getLabel(level)"
+                        type="button"
+                    />
+                </t>
+            </div>
+            <span class="o_urgency_tag" t-attf-class="o_urgency_tag_{{ props.value }}" t-esc="this.getCurrentLabel()"/>
         </div>
     </t>
 
