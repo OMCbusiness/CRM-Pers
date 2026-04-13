@@ -1,0 +1,214 @@
+/* ================================================================
+   CRM PERSONALIZADO — Estilos para agencia inmobiliaria
+   ================================================================ */
+
+/* ── Variables de color ─────────────────────────────────────── */
+:root {
+    --crm-primary:       #2c6fad;
+    --crm-primary-light: #e8f1fa;
+    --crm-success:       #28a745;
+    --crm-warning:       #f39c12;
+    --crm-danger:        #e74c3c;
+    --crm-muted:         #8c9daf;
+    --crm-border:        #d0dce8;
+    --crm-radius:        10px;
+    --crm-shadow:        0 2px 10px rgba(44, 111, 173, 0.08);
+}
+
+/* ================================================================
+   BLOQUE CABECERA DEL FORMULARIO
+   ================================================================ */
+.crm-custom-header-block {
+    background: linear-gradient(135deg, #f0f6ff 0%, #f8fbff 100%);
+    border: 1px solid var(--crm-border);
+    border-radius: var(--crm-radius);
+    padding: 18px 22px 14px 22px;
+    margin: 12px 0 18px 0;
+    box-shadow: var(--crm-shadow);
+}
+
+.crm-custom-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 14px;
+}
+
+.crm-custom-row:last-child {
+    margin-bottom: 0;
+}
+
+.crm-custom-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.crm-badge-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid var(--crm-border);
+    border-radius: 8px;
+    padding: 8px 14px;
+}
+
+.crm-custom-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--crm-muted);
+    margin-bottom: 4px;
+}
+
+.crm-label-inline {
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #3d5a73;
+}
+
+/* ── Operación radio ───────────────────────────────────────── */
+.crm-operation-radio .o_radio_item label {
+    border: 2px solid var(--crm-border);
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: #ffffff;
+    color: #4a6278;
+}
+
+.crm-operation-radio .o_radio_item input:checked + label {
+    background: var(--crm-primary);
+    border-color: var(--crm-primary);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(44, 111, 173, 0.25);
+}
+
+/* ── Fila urgencia ─────────────────────────────────────────── */
+.crm-urgency-row {
+    background: #ffffff;
+    border: 1px solid var(--crm-border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    gap: 16px;
+    align-items: center;
+}
+
+.crm-urgency-row .crm-custom-label {
+    margin-bottom: 0;
+    min-width: 110px;
+}
+
+/* ================================================================
+   WIDGET DE URGENCIA (RAYOS)
+   ================================================================ */
+.o_urgency_stars_widget {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.o_urgency_bolt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+    font-size: 16px;
+    border: 2px solid transparent;
+}
+
+.o_urgency_bolt:hover {
+    transform: scale(1.2);
+}
+
+.o_urgency_bolt_inactive {
+    color: #c8d6e5;
+    background: #f4f7fb;
+    border-color: #dce6f0;
+}
+
+.o_urgency_bolt_inactive:hover {
+    color: #f39c12;
+    background: #fff8ec;
+    border-color: #f39c12;
+}
+
+/* Colores por nivel: 1=verde, 2=azul, 3=amarillo, 4=naranja, 5=rojo */
+.o_urgency_bolt_active:nth-child(1) { color: #ffffff; background: #27ae60; border-color: #27ae60; }
+.o_urgency_bolt_active:nth-child(2) { color: #ffffff; background: #3498db; border-color: #3498db; }
+.o_urgency_bolt_active:nth-child(3) { color: #ffffff; background: #f1c40f; border-color: #f1c40f; }
+.o_urgency_bolt_active:nth-child(4) { color: #ffffff; background: #e67e22; border-color: #e67e22; }
+.o_urgency_bolt_active:nth-child(5) { color: #ffffff; background: #e74c3c; border-color: #e74c3c; }
+
+.o_urgency_label {
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--crm-primary);
+    min-width: 62px;
+}
+
+/* ================================================================
+   KANBAN — BADGES EN TARJETAS
+   ================================================================ */
+.crm-kanban-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+}
+
+.crm-kanban-badges .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+}
+
+.crm-badge-sale      { background: #e3f0ff; color: #2c6fad; }
+.crm-badge-rent      { background: #e9faf0; color: #1e8449; }
+.crm-badge-both      { background: #fef9e7; color: #b7770d; }
+.crm-badge-exclusive { background: #fdebd0; color: #a04000; }
+
+/* Rayos en kanban */
+.crm-kanban-urgency {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 4px;
+}
+
+.crm-bolt { font-size: 12px; }
+.crm-bolt-active   { color: #e74c3c; }
+.crm-bolt-inactive { color: #dde3ea; }
+
+/* ================================================================
+   TOGGLES — estilo mejorado
+   ================================================================ */
+.crm-exclusive-toggle .o_boolean_toggle,
+.crm-agency-toggle .o_boolean_toggle {
+    --toggle-active-bg: var(--crm-primary);
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 768px) {
+    .crm-custom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         FORMULARIO PRINCIPAL DE OPORTUNIDAD / LEAD
+    ============================================================ -->
+    <record id="crm_lead_form_view_custom" model="ir.ui.view">
+        <field name="name">crm.lead.form.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_all_leads"/>
+        <field name="arch" type="xml">
+
+            <!-- ── Eliminar campos no deseados ── -->
+            <field name="expected_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="prorated_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="probability" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="automated_probability" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="contact_name" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="date_deadline" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="tag_ids" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+
+            <!-- ── Ocultar labels de campos eliminados ── -->
+            <label for="expected_revenue" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+            <label for="date_deadline" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </label>
+
+            <!-- ── Inyectar nuevos campos después del nombre ── -->
+            <field name="name" position="after">
+
+                <!-- Bloque visual: operación + exclusiva + urgencia -->
+                <div class="crm-custom-header-block">
+
+                    <!-- Fila 1: Operación y Exclusiva -->
+                    <div class="crm-custom-row">
+                        <div class="crm-custom-field-group">
+                            <label class="crm-custom-label" for="operation_type">Operación</label>
+                            <field name="operation_type"
+                                   widget="radio"
+                                   options="{'horizontal': true}"
+                                   class="crm-operation-radio"/>
+                        </div>
+                        <div class="crm-custom-field-group crm-badge-group">
+                            <field name="exclusive" widget="boolean_toggle" class="crm-exclusive-toggle"/>
+                            <label class="crm-custom-label crm-label-inline" for="exclusive">Exclusiva</label>
+                        </div>
+                        <div class="crm-custom-field-group crm-badge-group">
+                            <field name="working_with_agency" widget="boolean_toggle" class="crm-agency-toggle"/>
+                            <label class="crm-custom-label crm-label-inline" for="working_with_agency">¿Trabaja con otra agencia?</label>
+                        </div>
+                    </div>
+
+                    <!-- Fila 2: Widget de urgencia -->
+                    <div class="crm-custom-row crm-urgency-row">
+                        <label class="crm-custom-label" for="urgency_level">Nivel de urgencia</label>
+                        <field name="urgency_level" widget="urgency_stars" class="crm-urgency-stars"/>
+                    </div>
+
+                </div>
+
+            </field>
+
+        </field>
+    </record>
+
+
+    <!-- ============================================================
+         VISTA KANBAN — añadir indicadores de urgencia y operación
+    ============================================================ -->
+    <record id="crm_lead_kanban_view_custom" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_kanban_view"/>
+        <field name="arch" type="xml">
+
+            <!-- Inyectar campos en el bloque del kanban -->
+            <templates position="before">
+                <field name="urgency_level"/>
+                <field name="operation_type"/>
+                <field name="exclusive"/>
+                <field name="working_with_agency"/>
+            </templates>
+
+            <!-- Añadir badges al pie de cada tarjeta kanban -->
+            <div class="oe_kanban_bottom_right" position="inside">
+                <div class="crm-kanban-badges">
+                    <!-- Operación -->
+                    <span t-if="record.operation_type.raw_value == 'sale'"
+                          class="badge crm-badge-sale">Venta</span>
+                    <span t-if="record.operation_type.raw_value == 'rent'"
+                          class="badge crm-badge-rent">Alquiler</span>
+                    <span t-if="record.operation_type.raw_value == 'both'"
+                          class="badge crm-badge-both">Venta/Alquiler</span>
+                    <!-- Exclusiva -->
+                    <span t-if="record.exclusive.raw_value"
+                          class="badge crm-badge-exclusive">Exclusiva</span>
+                    <!-- Urgencia -->
+                    <span class="crm-kanban-urgency">
+                        <t t-set="lvl" t-value="record.urgency_level.raw_value"/>
+                        <i t-foreach="[1,2,3,4,5]" t-as="i" t-key="i"
+                           t-attf-class="fa fa-bolt crm-bolt #{ i &lt;= lvl ? 'crm-bolt-active' : 'crm-bolt-inactive' }"/>
+                    </span>
+                </div>
+            </div>
+
+        </field>
+    </record>
+
+
+    <!-- ============================================================
+         VISTA LISTA — añadir columnas de urgencia y operación
+    ============================================================ -->
+    <record id="crm_lead_list_view_custom" model="ir.ui.view">
+        <field name="name">crm.lead.list.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_all_leads_tree"/>
+        <field name="arch" type="xml">
+
+            <!-- Ocultar columnas no deseadas -->
+            <field name="expected_revenue" position="attributes">
+                <attribute name="optional">hide</attribute>
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="tag_ids" position="attributes">
+                <attribute name="optional">hide</attribute>
+                <attribute name="column_invisible">1</attribute>
+            </field>
+
+            <!-- Añadir columnas nuevas -->
+            <field name="partner_id" position="after">
+                <field name="operation_type" string="Operación" optional="show"/>
+                <field name="urgency_level" string="Urgencia" optional="show"/>
+                <field name="exclusive" string="Exclusiva" optional="show"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>
