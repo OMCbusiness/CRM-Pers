@@ -111,6 +111,11 @@
                 <field name="working_with_agency"/>
             </templates>
 
+            <!-- Ocultar partner_id de la tarjeta -->
+            <xpath expr="//t[@t-name='card']//div[@invisible='not partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <!-- Añadir badges e indicadores en la tarjeta kanban -->
             <xpath expr="//t[@t-name='card']/footer" position="before">
                 <div class="crm-kanban-info">
