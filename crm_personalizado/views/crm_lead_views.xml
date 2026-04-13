@@ -89,7 +89,7 @@
     <record id="crm_lead_kanban_view_custom" model="ir.ui.view">
         <field name="name">crm.lead.kanban.custom</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_lead_kanban_view"/>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
 
             <!-- Inyectar campos en el bloque del kanban -->
@@ -101,7 +101,7 @@
             </templates>
 
             <!-- Añadir badges al pie de cada tarjeta kanban -->
-            <div class="oe_kanban_bottom_right" position="inside">
+            <xpath expr="//t[@t-name='card']/footer" position="before">
                 <div class="crm-kanban-badges">
                     <!-- Operación -->
                     <span t-if="record.operation_type.raw_value == 'sale'"
@@ -120,7 +120,7 @@
                            t-attf-class="fa fa-bolt crm-bolt #{ i &lt;= lvl ? 'crm-bolt-active' : 'crm-bolt-inactive' }"/>
                     </span>
                 </div>
-            </div>
+            </xpath>
 
         </field>
     </record>
@@ -132,7 +132,7 @@
     <record id="crm_lead_list_view_custom" model="ir.ui.view">
         <field name="name">crm.lead.list.custom</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_lead_all_leads_tree"/>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
         <field name="arch" type="xml">
 
             <!-- Ocultar columnas no deseadas -->
