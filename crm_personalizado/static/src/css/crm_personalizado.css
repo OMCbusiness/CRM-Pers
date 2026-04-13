@@ -164,15 +164,48 @@
 }
 
 /* ================================================================
-   KANBAN — CONTENEDOR PRINCIPAL
+   KANBAN — TARJETA CON COLOR POR URGENCIA
    ================================================================ */
-.crm-kanban-info {
+.crm-card-urgency {
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: -8px -12px 0 -12px;
+    transition: background 0.2s;
+}
+
+/* Nivel 0 / sin urgencia: sin color */
+.crm-card-level-0 { background: transparent; }
+
+/* Nivel 1: verde suave */
+.crm-card-level-1 { background: #e8f8ef; border-left: 4px solid #27ae60; }
+
+/* Nivel 2: azul suave */
+.crm-card-level-2 { background: #e3f1fc; border-left: 4px solid #3498db; }
+
+/* Nivel 3: amarillo suave */
+.crm-card-level-3 { background: #fef9e7; border-left: 4px solid #f1c40f; }
+
+/* Nivel 4: naranja suave */
+.crm-card-level-4 { background: #fef0e0; border-left: 4px solid #e67e22; }
+
+/* Nivel 5: rojo suave */
+.crm-card-level-5 { background: #fdeded; border-left: 4px solid #e74c3c; }
+
+/* ── Campos en la tarjeta ────────────────────────────────────── */
+.crm-card-field {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 6px;
-    margin: 6px 0 4px 0;
-    padding-top: 8px;
-    border-top: 1px solid #eef2f7;
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: #444;
+}
+
+.crm-card-icon {
+    color: #8c9daf;
+    font-size: 12px;
+    width: 14px;
+    text-align: center;
 }
 
 /* ── Fila de badges ──────────────────────────────────────────── */
@@ -181,6 +214,7 @@
     flex-wrap: wrap;
     gap: 5px;
     align-items: center;
+    margin-top: 8px;
 }
 
 .crm-badge {

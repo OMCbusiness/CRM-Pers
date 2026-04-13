@@ -127,44 +127,66 @@
                 <field name="operation_type"/>
                 <field name="exclusive"/>
                 <field name="budget"/>
+                <field name="company_currency"/>
+                <field name="email_from"/>
+                <field name="phone"/>
             </templates>
 
-            <!-- Ocultar partner_id y contact_name de la tarjeta -->
-            <xpath expr="//t[@t-name='card']//div[@invisible='not partner_id']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//t[@t-name='card']//field[@name='contact_name']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//t[@t-name='card']//field[@name='partner_name']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//t[@t-name='card']//field[@name='tag_ids']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
+            <!-- Reemplazar tarjeta completa -->
+            <xpath expr="//t[@t-name='card']" position="replace">
+                <t t-name="card">
+                    <div t-attf-class="crm-card-urgency crm-card-level-#{record.urgency_level.raw_value || 0}">
 
-            <!-- Badges e indicadores -->
-            <xpath expr="//t[@t-name='card']/footer" position="before">
-                <div class="crm-kanban-info">
-                    <div class="crm-kanban-badges">
-                        <span t-if="record.operation_type.raw_value == 'sale'"
-                              class="crm-badge crm-badge-sale"><i class="fa fa-home me-1"/>Venta</span>
-                        <span t-if="record.operation_type.raw_value == 'rent'"
-                              class="crm-badge crm-badge-rent"><i class="fa fa-key me-1"/>Alquiler</span>
-                        <span t-if="record.exclusive.raw_value"
-                              class="crm-badge crm-badge-exclusive"><i class="fa fa-star me-1"/>Exclusiva</span>
-                    </div>
-                    <!-- Barra de urgencia -->
-                    <div class="crm-kanban-urgency-row" t-if="record.urgency_level.raw_value">
-                        <t t-set="lvl" t-value="record.urgency_level.raw_value"/>
-                        <span class="crm-urgency-label">Urgencia</span>
-                        <div class="crm-urgency-bar">
-                            <t t-foreach="[1,2,3,4,5]" t-as="i" t-key="i">
-                                <div t-attf-class="crm-urgency-pip #{ i &lt;= lvl ? 'crm-pip-active crm-pip-level-' + lvl : 'crm-pip-empty' }"/>
-                            </t>
+                        <!-- Nombre -->
+                        <field name="name" class="fw-bold fs-5"/>
+
+                        <!-- Email -->
+                        <div class="crm-card-field" t-if="record.email_from.raw_value">
+                            <i class="fa fa-envelope crm-card-icon"/>
+                            <field name="email_from" widget="email"/>
                         </div>
+
+                        <!-- Teléfono -->
+                        <div class="crm-card-field" t-if="record.phone.raw_value">
+                            <i class="fa fa-phone crm-card-icon"/>
+                            <field name="phone" widget="phone"/>
+                        </div>
+
+                        <!-- Presupuesto -->
+                        <div class="crm-card-field" t-if="record.budget.raw_value">
+                            <i class="fa fa-money crm-card-icon"/>
+                            <field name="budget" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                        </div>
+
+                        <!-- Badges: Operación + Exclusiva -->
+                        <div class="crm-kanban-badges">
+                            <span t-if="record.operation_type.raw_value == 'sale'"
+                                  class="crm-badge crm-badge-sale"><i class="fa fa-home me-1"/>Venta</span>
+                            <span t-if="record.operation_type.raw_value == 'rent'"
+                                  class="crm-badge crm-badge-rent"><i class="fa fa-key me-1"/>Alquiler</span>
+                            <span t-if="record.exclusive.raw_value"
+                                  class="crm-badge crm-badge-exclusive"><i class="fa fa-star me-1"/>Exclusiva</span>
+                        </div>
+
+                        <!-- Barra de urgencia -->
+                        <div class="crm-kanban-urgency-row" t-if="record.urgency_level.raw_value">
+                            <t t-set="lvl" t-value="record.urgency_level.raw_value"/>
+                            <span class="crm-urgency-label">Urgencia</span>
+                            <div class="crm-urgency-bar">
+                                <t t-foreach="[1,2,3,4,5]" t-as="i" t-key="i">
+                                    <div t-attf-class="crm-urgency-pip #{ i &lt;= lvl ? 'crm-pip-active crm-pip-level-' + lvl : 'crm-pip-empty' }"/>
+                                </t>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
+
+                    <footer class="pt-1">
+                        <div class="d-flex mt-auto align-items-center">
+                            <field name="activity_ids" widget="kanban_activity"/>
+                        </div>
+                    </footer>
+                </t>
             </xpath>
 
         </field>
