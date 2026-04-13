@@ -210,7 +210,7 @@
                     <field name="contact_name" invisible="1"/>
                     <field name="partner_name" invisible="1"/>
 
-                    <footer class="pt-1">
+                    <footer class="pt-1 d-none">
                         <div class="d-flex mt-auto align-items-center">
                             <field name="activity_ids" widget="kanban_activity"/>
                         </div>
