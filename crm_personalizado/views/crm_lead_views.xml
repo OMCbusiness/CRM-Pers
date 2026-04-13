@@ -25,6 +25,9 @@
             <xpath expr="//div[@id='probability']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//h2//div[contains(@class,'col-auto')][.//div[@id='probability']]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <field name="user_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
