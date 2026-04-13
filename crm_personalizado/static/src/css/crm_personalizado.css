@@ -190,7 +190,27 @@
 
 /* Nivel 5: rojo suave */
 .crm-card-level-5 { background: #fdeded; border-left: 4px solid #e74c3c; }
+/* ── Cabecera de tarjeta: nombre + badges en línea ── */
+.crm-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
 
+.crm-card-name {
+    flex: 1;
+    min-width: 0;
+}
+
+.crm-card-badges-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    flex-shrink: 0;
+}
 /* ── Campos en la tarjeta ────────────────────────────────────── */
 .crm-card-field {
     display: flex;
