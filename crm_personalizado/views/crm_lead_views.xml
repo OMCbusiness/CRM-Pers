@@ -22,15 +22,9 @@
             </field>
 
             <!-- ── Ocultar sección de IA / probabilidad ── -->
-            <button name="action_set_automated_probability" position="attributes">
+            <xpath expr="//div[@id='probability']" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </button>
-            <widget name="pls_tooltip_button" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </widget>
-            <div id="probability" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </div>
+            </xpath>
             <field name="user_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
