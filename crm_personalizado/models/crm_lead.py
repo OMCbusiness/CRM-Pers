@@ -13,7 +13,7 @@ class CrmLead(models.Model):
 
     # Presupuesto del cliente
     budget = fields.Monetary(
-        string='Presupuesto',
+        string='Precio estimado',
         currency_field='company_currency',
     )
 
