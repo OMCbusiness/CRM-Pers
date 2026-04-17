@@ -126,6 +126,26 @@
                         </div>
                     </div>
 
+                    <!-- Fila 4: Tipo de propiedad + Estado de la propiedad -->
+                    <div class="crm-custom-row">
+                        <div class="crm-custom-field-group crm-field-wide">
+                            <label class="crm-custom-label" for="property_type">Tipo de propiedad</label>
+                            <field name="property_type"/>
+                        </div>
+                        <div class="crm-custom-field-group crm-field-wide">
+                            <label class="crm-custom-label" for="property_state">Estado de la propiedad</label>
+                            <field name="property_state"/>
+                        </div>
+                    </div>
+
+                    <!-- Fila 5: Zona de la propiedad -->
+                    <div class="crm-custom-row">
+                        <div class="crm-custom-field-group crm-field-wide">
+                            <label class="crm-custom-label" for="property_zone">Zona donde se encuentra la propiedad</label>
+                            <field name="property_zone" placeholder="Ej: Centro, Eixample, Zona Norte..."/>
+                        </div>
+                    </div>
+
                 </div>
             </field>
 
@@ -148,6 +168,9 @@
                 <field name="operation_type"/>
                 <field name="exclusive"/>
                 <field name="budget"/>
+                <field name="property_type"/>
+                <field name="property_state"/>
+                <field name="property_zone"/>
                 <field name="company_currency"/>
                 <field name="email_from"/>
                 <field name="phone"/>
@@ -171,6 +194,8 @@
                                       class="crm-badge crm-badge-sale"><i class="fa fa-home me-1"/>Venta</span>
                                 <span t-if="record.operation_type.raw_value == 'rent'"
                                       class="crm-badge crm-badge-rent"><i class="fa fa-key me-1"/>Alquiler</span>
+                                <span t-if="record.operation_type.raw_value == 'valuation'"
+                                      class="crm-badge crm-badge-valuation"><i class="fa fa-calculator me-1"/>Valoración</span>
                                 <span t-if="record.exclusive.raw_value"
                                       class="crm-badge crm-badge-exclusive"><i class="fa fa-star me-1"/>Exclusiva</span>
                             </div>
@@ -260,6 +285,9 @@
             <field name="email_from" position="after">
                 <field name="budget" string="Presupuesto" optional="show" widget="monetary" options="{'currency_field': 'company_currency'}"/>
                 <field name="operation_type" string="Operación" optional="show"/>
+                <field name="property_type" string="Tipo de propiedad" optional="show"/>
+                <field name="property_state" string="Estado de la propiedad" optional="show"/>
+                <field name="property_zone" string="Zona de la propiedad" optional="show"/>
                 <field name="urgency_level" string="Urgencia" optional="show"/>
                 <field name="exclusive" string="Exclusiva" optional="show"/>
             </field>
